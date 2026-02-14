@@ -29,6 +29,63 @@
         transform: translateY(-10px);
       }
     }
+    
+    .message-container {
+      max-width: 600px;
+      margin: 2rem auto;
+      padding: 2rem;
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 1rem;
+      box-shadow: 0 10px 30px rgba(189, 30, 89, 0.1);
+      border: 2px solid #ffb6c1;
+      text-align: center;
+      animation: fadeIn 1s ease-in;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .heart-message {
+      color: #bd1e59;
+      line-height: 1.8;
+    }
+    
+    .heart-message p {
+      margin-bottom: 1rem;
+    }
+    
+    .heart-message strong {
+      color: #ff1493;
+      font-size: 1.2rem;
+      display: block;
+      margin: 1.5rem 0;
+    }
+    
+    .view-message-btn {
+      background: linear-gradient(45deg, #ff69b4, #ff1493);
+      color: white;
+      font-size: 1.5rem;
+      padding: 1rem 2.5rem;
+      border-radius: 50px;
+      border: none;
+      cursor: pointer;
+      margin-top: 2rem;
+      transition: transform 0.3s, box-shadow 0.3s;
+      animation: pulse 2s infinite;
+    }
+    
+    .view-message-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 10px 25px rgba(255, 20, 147, 0.4);
+    }
+    
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
   </style>
   <!-- Preload images so transitions feel instant -->
   <link rel="preload" as="image" href="./images/image1.gif">
@@ -40,8 +97,8 @@
   <link rel="preload" as="image" href="./images/image7.gif">
 </head>
 <body class="gradient-background">
-  <main class="flex items-center justify-center h-screen">
-    <section class="flex flex-col items-center p-4">
+  <main class="flex items-center justify-center min-h-screen p-4">
+    <section class="flex flex-col items-center p-4 w-full">
       <img
         id="imageDisplay"
         src="./images/image1.gif"
@@ -65,12 +122,34 @@
           No
         </button>
       </div>
+      
+      <!-- Container for the message button and message -->
+      <div id="messageSection" class="w-full hidden">
+        <button id="viewMessageBtn" class="view-message-btn">
+          💌 Click to see your surprise 💌
+        </button>
+        
+        <div id="loveMessage" class="message-container hidden">
+          <div class="heart-message">
+            <p>Hey ❤️</p>
+            <p>Kabhi socha nahi tha ki life mein koi aisa aayega jo itna special ban jayega.<br>
+            Tumhare saath baat karna, hasna, aur even choti-choti cheezein share karna bhi itna accha lagta hai ki ab woh meri daily happiness ban chuki hai.</p>
+            <p>Tum meri life ka woh part ho jisse main har din thoda aur zyada appreciate karta hoon.<br>
+            Na koi perfect line hai, na koi filmy dialogue… bas itna kehna hai —</p>
+            <strong>Mujhe tum bahut pasand ho.<br>
+            Aur agar tum haan kaho… toh main har Valentine hi nahi, har din tumhare saath celebrate karna chahta hoon.</strong>
+            <p class="text-2xl mt-4">Will you be mine? 💖</p>
+          </div>
+        </div>
+      </div>
     </section>
   </main>
- <!-- Footer -->
+  
+  <!-- Footer -->
   <footer class="text-center py-4 text-[#bd1e59] text-sm bg-white/40 backdrop-blur-md">
     Made with love 💖 afju
   </footer>
+  
   <script>
     (() => {
       // DOM references
@@ -79,6 +158,9 @@
       const imageDisplay = document.getElementById('imageDisplay');
       const valentineQuestion = document.getElementById('valentineQuestion');
       const responseButtons = document.getElementById('responseButtons');
+      const messageSection = document.getElementById('messageSection');
+      const viewMessageBtn = document.getElementById('viewMessageBtn');
+      const loveMessage = document.getElementById('loveMessage');
 
       // Configuration
       const GROWTH_PER_CLICK = 35;
@@ -147,6 +229,9 @@
         imageDisplay.alt = ALT_TEXTS[ALT_TEXTS.length - 1];
         valentineQuestion.textContent = 'Yayyy!! :3';
         responseButtons.style.display = 'none';
+        
+        // Show the message section with the new button
+        messageSection.classList.remove('hidden');
 
         // Heart-shaped confetti for a valentine theme
         const heart = confetti.shapeFromPath({
@@ -158,6 +243,20 @@
         confetti({ ...defaults, particleCount: 50, scalar: 2 });
         confetti({ ...defaults, particleCount: 25, scalar: 3 });
         confetti({ ...defaults, particleCount: 10, scalar: 4 });
+      });
+      
+      // Add event listener for the view message button
+      viewMessageBtn.addEventListener('click', () => {
+        loveMessage.classList.remove('hidden');
+        viewMessageBtn.style.display = 'none';
+        
+        // More confetti when they view the message
+        confetti({
+          particleCount: 100,
+          spread: 70,
+          origin: { y: 0.6 },
+          colors: ['#ff69b4', '#ff1493', '#ff6b81']
+        });
       });
     })();
   </script>
