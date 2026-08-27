@@ -1,4 +1,4 @@
-# Valentine's Day Interactive Website (CodeKage)
+# Valentine's Day Interactive Website (Resolved Issue)
 
 A cute, interactive web page to ask someone to be your Valentine. Features playful button mechanics, heartwarming GIFs, and heart-shaped confetti.
 
